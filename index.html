@@ -213,18 +213,18 @@
         </div>
         
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="fixed inset-0 bg-white z-50 flex flex-col items-center justify-center transform translate-x-full transition-transform duration-300 ease-in-out">
-            <button id="menu-close" class="absolute top-6 right-6 w-10 h-10 flex items-center justify-center text-gray-800">
+        <div id="mobile-menu" class="fixed inset-0 bg-white/95 backdrop-blur-sm z-50 flex flex-col items-center justify-center transform translate-x-full transition-transform duration-300 ease-in-out">
+            <button id="menu-close" class="absolute top-6 right-6 w-10 h-10 flex items-center justify-center text-gray-800 hover:text-primary transition-colors">
                 <i class="ri-close-line ri-lg"></i>
             </button>
             
-            <nav class="flex flex-col items-center space-y-6 text-xl">
-                <a href="#home" class="text-gray-800 hover:text-primary transition-colors font-medium mobile-link">Home</a>
-                <a href="#about" class="text-gray-800 hover:text-primary transition-colors font-medium mobile-link">About</a>
-                <a href="#services" class="text-gray-800 hover:text-primary transition-colors font-medium mobile-link">Services</a>
-                <a href="#portfolio" class="text-gray-800 hover:text-primary transition-colors font-medium mobile-link">Portfolio</a>
-                <a href="#testimonials" class="text-gray-800 hover:text-primary transition-colors font-medium mobile-link">Testimonials</a>
-                <a href="#contact" class="text-gray-800 hover:text-primary transition-colors font-medium mobile-link">Contact</a>
+            <nav class="flex flex-col items-center space-y-8 text-xl w-full px-6">
+                <a href="#home" class="text-gray-800 hover:text-primary transition-colors font-medium mobile-link w-full text-center py-2">Home</a>
+                <a href="#about" class="text-gray-800 hover:text-primary transition-colors font-medium mobile-link w-full text-center py-2">About</a>
+                <a href="#services" class="text-gray-800 hover:text-primary transition-colors font-medium mobile-link w-full text-center py-2">Services</a>
+                <a href="#portfolio" class="text-gray-800 hover:text-primary transition-colors font-medium mobile-link w-full text-center py-2">Portfolio</a>
+                <a href="#testimonials" class="text-gray-800 hover:text-primary transition-colors font-medium mobile-link w-full text-center py-2">Testimonials</a>
+                <a href="#contact" class="text-gray-800 hover:text-primary transition-colors font-medium mobile-link w-full text-center py-2">Contact</a>
             </nav>
         </div>
     </header>
@@ -896,24 +896,30 @@
             const mobileMenu = document.getElementById('mobile-menu');
             const mobileLinks = document.querySelectorAll('.mobile-link');
             
-            menuToggle.addEventListener('click', function() {
+            function openMenu() {
                 mobileMenu.classList.remove('translate-x-full');
                 mobileMenu.classList.add('translate-x-0');
                 document.body.style.overflow = 'hidden';
-            });
+            }
             
-            menuClose.addEventListener('click', function() {
+            function closeMenu() {
                 mobileMenu.classList.remove('translate-x-0');
                 mobileMenu.classList.add('translate-x-full');
                 document.body.style.overflow = '';
-            });
+            }
+            
+            menuToggle.addEventListener('click', openMenu);
+            menuClose.addEventListener('click', closeMenu);
             
             mobileLinks.forEach(link => {
-                link.addEventListener('click', function() {
-                    mobileMenu.classList.remove('translate-x-0');
-                    mobileMenu.classList.add('translate-x-full');
-                    document.body.style.overflow = '';
-                });
+                link.addEventListener('click', closeMenu);
+            });
+
+            // Close menu on window resize if open
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768 && !mobileMenu.classList.contains('translate-x-full')) {
+                    closeMenu();
+                }
             });
         });
     </script>
